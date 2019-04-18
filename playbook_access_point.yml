@@ -1,0 +1,8 @@
+---
+
+- name: Install WiFi Access Point
+  hosts: all
+  become: yes
+
+  roles:
+    - wifi_ap

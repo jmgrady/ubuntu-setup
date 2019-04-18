@@ -4,9 +4,8 @@
 
 ## Roles ##
 
-  **create_ap** - sets up the wifi interface as a wifi access point (hotspot)
+  **wifi_ap** - sets up the wifi interface as a wifi access point (hotspot)
 
   **headless** - sets configuration options that make sense when the device will be used as a headless node, such as, configuring the power button to shutdown when there is no display to confirm or to choose between Shutdown, Restart and Cancel.
 
   **mediaplayer** - installs various media tools, such as spotify and clementine
-  
