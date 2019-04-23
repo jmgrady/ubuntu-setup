@@ -7,15 +7,17 @@
     cache_valid_time=3600
     state=present
 
-- name: Check if Service Exists
-  stat: path=/usr/lib/systemd/system/create_ap.service
-  register: service_status
+- name: populate service facts
+  service_facts:
+
+#- debug:
+#    var: ansible_facts.services
 
 - name: Stop service
   service:
     name=create_ap
     state=stopped
-  when: service_status.stat.exists
+  when: "'create_ap' in services"
   notify: Restart create_ap
 
 - name: Install create_ap script
@@ -102,8 +104,15 @@
     group: root
     mode: 0644
 
-- name: Start service
+- name: reload systemd unit configuration
+  command: systemctl daemon-reload
+
+- name: Enable service
   service:
     name=create_ap
     enabled=yes
+
+- name: Start service
+  service:
+    name=create_ap
     state=started

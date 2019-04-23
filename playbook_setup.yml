@@ -1,8 +1,15 @@
 ---
 
-- name: Install WiFi Access Point
+- name: Setup Ubuntu Server
   hosts: all
   become: yes
 
   roles:
-    - wifi_ap
+    - role: wifi_ap
+    - role: headless
+
+  tasks:
+    - name: Install the One True Editor
+      apt:
+        name: emacs-nox
+        state: present
