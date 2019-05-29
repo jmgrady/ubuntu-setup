@@ -52,5 +52,5 @@ else
   ssh $TARGET
   ssh $TARGET rm /tmp/prep-target.sh
 
-  ansible-playbook -i hosts playbook_setup.yml --limit $MACHINE -K
+  ansible-playbook -i hosts playbook_setup.yml --limit $MACHINE -u $USER -K
 fi

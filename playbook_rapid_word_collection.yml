@@ -1,0 +1,13 @@
+---
+
+################################
+# Configure device for Rapid Word Collection back-end.
+#
+
+- name:  Configure for Rapid Word Collection
+  hosts: all
+  become: yes
+
+  roles:
+    - role: setup_mongodb
+    - role: setup_apache
