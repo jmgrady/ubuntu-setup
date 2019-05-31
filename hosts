@@ -1,5 +1,17 @@
 [all]
-10.0.0.[02:63]
-curly
-10.10.0.1
+# SIL network
 172.20.[1:254].[1:254]
+
+# Jim's home network
+10.0.0.[02:63]
+
+# NUCs by name
+curly
+anglophone
+
+# NUCs by access point IP address
+10.10.0.1
+
+# Virtual machine addresses
+192.168.[56:64].10
+nuc-vm
