@@ -25,74 +25,84 @@ A setup script, setup-target.sh is provided to perform the installation.  Its us
   1. Open Oracle's *VirtualBox*.
 
   1. Create a virual network interface:
-    1. Click on the *File* menu and select *Host Network Manager...*
-    1. Click the *Create* button to create a new Host Network Adapter.  If it is the first such adapter created it will have the following attributes:
-      <table>
-      <tr><td>Name</td><td>vboxnet0</td></tr>
-      <tr><td>Addresses</td><td>192.168.56.1/24</td></tr>
-      <tr><td>DHCP Enabled</td><td>No</td></tr>    
-      </table>
+
+     1. Click on the *File* menu and select *Host Network Manager...*
+
+     1. Click the *Create* button to create a new Host Network Adapter.  If it is the first such adapter created it will have the following attributes:
+
+        | Field         | Value           |
+        | ------------- | :-------------: |
+        | Name:         | vboxnet0        |
+        | Addresses:    | 192.168.56.1/24 |
+        | DHCP Enabled: | No              |
+
   1. Create the VM
-    1.  Click the *New* button to create a new VM.
-    1. Give the new VM a name and set the OS Type to ```Linux``` and the Version to ```Ubuntu (64-bit)```; click *Next*.
+     1.  Click the *New* button to create a new VM.
 
-    1. Select the amount of memory you want for your VM; click *Next*.
+     1. Give the new VM a name and set the OS Type to ```Linux``` and the Version to ```Ubuntu (64-bit)```; click *Next*.
 
-    1. In the next few screens, you will setup the hard disk:
-      1. Create a new virtual hard disk,
-      1. Use a VirtualBox Disk Image (VDI),
-      1. Select dynamically allocated,
-      1. and set the size to 10 GB.
+     1. Select the amount of memory you want for your VM; click *Next*.
+
+     1. In the next few screens, you will setup the hard disk:
+        1. Create a new virtual hard disk,
+        1. Use a VirtualBox Disk Image (VDI),
+        1. Select dynamically allocated,
+        1. and set the size to 10 GB.
 
   1. Setup DVD image and Networking
-    1. Select the new VM and click on the *Settings* button;
 
-    1. Click on the *Storage* section in the pane on the left side. Click on the optical disk icon (circled in red in the image below) and select the ubuntu server ISO image downloaded above.
-    ![alt text](images/vbox-storage-settings.png "Virtual Box Storage Settings")
+     1. Select the new VM and click on the *Settings* button;
 
-    1. Click on the *Network* section.
+     1. Click on the *Storage* section in the pane on the left side. Click on the optical disk icon (circled in red in the image below) and select the ubuntu server ISO image downloaded above.
+     ![alt text](./images/vbox-storage-settings.png "Virtual Box Storage Settings")
 
-    1. Click on the Adapter 2 tab and set it up as follows:
-      <table>
-      <tr><td>Enable Network Adapter</td><td>Checked</td></tr>
-      <tr><td>Attached to:</td><td>Host-only Adapter</td></tr>
-      <tr><td>Name:</td><td>vboxnet0</td></tr>    
-      </table>
+     1. Click on the *Network* section.
 
-    1. Start the virtual machine and follow the prompts to install Ubuntu Server.  Some things to note are:
-      1. You will want the installer to format the entire (virtual) disk and use LVM (that's the default)
+     1. Click on the Adapter 2 tab and set it up as follows:
 
-      1. *Make sure that you select the OpenSSH server when prompted to select the software for your server:*  
-      ![alt text](images/ubuntu-software-selection.png "Ubuntu Server Software Selection")
+         | Field                   | Value             |
+         | ----------------------- | :---------------: |
+         | Enable Network Adapter: | Checked           |
+         | Attached to:            | Host-only Adapter |
+         | Name:                   | vboxnet0          |
+
+     1. Start the virtual machine and follow the prompts to install Ubuntu Server.  Some things to note are:
+
+        1. You will want the installer to format the entire (virtual) disk and use LVM (that's the default)
+
+        1. *Make sure that you select the OpenSSH server when prompted to select the software for your server:*  
+        ![alt text](images/ubuntu-software-selection.png "Ubuntu Server Software Selection")
 
 
   1. When installation is complete, log in to the virtual machine and setup the network connection for the second adapter.
-    1. Run ```ip address``` to list the available interfaces.  There will be one ethernet interface that is up and has an IP address, e.g. enp0s3.  There will be a second ethernet interface that is down, e.g. enp0s8.  Note the name of this interface.
-    1. Edit /etc/netplan/01-netcfg.yaml  
-    ```sudo nano /etc/netplan/01-netcfg.yaml```
-    1. Edit the file so that it contains:
 
-       ```
-       # This file describes the network interfaces available on your system
-       # For more information, see netplan(5).
-       network:
-         version: 2
-         renderer: networkd
-         ethernets:
-           enp0s3:
-             dhcp4: yes
-           enp0s8:
-             addresses: [192.168.56.10/24]
-             gateway4: 192.168.1.1
-             nameservers:
-               addresses: [8.8.8.8,8.8.4.4]
-             dhcp4: no
-       ```
-       ... substituting the names of your adapters, of course.  Also make sure that the address you assign is in the subnet specified by the Host Network Adapter.  Unfortunately, you will have to type it.  You will not be able to cut & paste to the VM.
+     1. Run ```ip address``` to list the available interfaces.  There will be one ethernet interface that is up and has an IP address, e.g. enp0s3.  There will be a second ethernet interface that is down, e.g. enp0s8.  Note the name of this interface.
+
+     1. Edit /etc/netplan/01-netcfg.yaml  
+        ```sudo nano /etc/netplan/01-netcfg.yaml```
+
+     1. Edit the file so that it contains:  
+        ```
+        # This file describes the network interfaces available on your system
+        # For more information, see netplan(5).
+        network:
+          version: 2
+          renderer: networkd
+          ethernets:
+            enp0s3:
+              dhcp4: yes
+            enp0s8:
+              addresses: [192.168.56.10/24]
+              gateway4: 192.168.1.1
+              nameservers:
+                addresses: [8.8.8.8,8.8.4.4]
+              dhcp4: no
+        ```
+        ... substituting the names of your adapters, of course.  Also make sure that the address you assign is in the subnet specified by the Host Network Adapter.  Unfortunately, you will have to type it.  You will not be able to cut & paste to the VM.
 
      1. Run: ```sudo netplan apply```
 
-     1. Add the VM's IP address to the ```/etc/hosts``` file on the host computer *(optional)*:
+     1. Add the VM's IP address to the ```/etc/hosts``` file on the host computer *(optional)*:  
      ```
      # Virtual Machines
      192.168.56.10	nuc-vm
