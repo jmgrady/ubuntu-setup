@@ -85,5 +85,6 @@ if [ "$COPYID" -eq 1 ] ; then
   echo "Copying ssh id to $USER@$MACHINE"
   ssh-copy-id "$USER@$MACHINE"
 fi
-
-ansible-playbook -i hosts playbook_setup.yml --limit $MACHINE -u $USER -K
+CMD_STRING="ansible-playbook -i hosts playbook_setup.yml --limit $MACHINE -u $USER -K"
+echo -e "Running \"${CMD_STRING}\""
+${CMD_STRING}
