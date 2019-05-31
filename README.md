@@ -62,7 +62,9 @@ A setup script, setup-target.sh is provided to perform the installation.  Its us
     1. Start the virtual machine and follow the prompts to install Ubuntu Server.  Some things to note are:
       1. You will want the installer to format the entire (virtual) disk and use LVM (that's the default)
 
-      1. *Make sure that you select the OpenSSH server when prompted for software to be installed.*
+      1. *Make sure that you select the OpenSSH server when prompted to select the software for your server:*  
+      ![alt text](images/ubuntu-software-selection.png "Ubuntu Server Software Selection")
+
 
   1. When installation is complete, log in to the virtual machine and setup the network connection for the second adapter.
     1. Run ```ip address``` to list the available interfaces.  There will be one ethernet interface that is up and has an IP address, e.g. enp0s3.  There will be a second ethernet interface that is down, e.g. enp0s8.  Note the name of this interface.
