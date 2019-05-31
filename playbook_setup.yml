@@ -8,6 +8,7 @@
     - role: ansible-depends
     - role: headless
     - role: setup_mongodb
+    - role: setup_dotnet_core
     - role: setup_apache
     - role: wifi_ap
 

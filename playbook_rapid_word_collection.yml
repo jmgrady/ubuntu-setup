@@ -10,4 +10,4 @@
 
   roles:
     - role: setup_mongodb
-    - role: setup_apache
+    - role: setup_dotnet_core
