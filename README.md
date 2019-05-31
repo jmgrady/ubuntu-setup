@@ -90,6 +90,13 @@ A setup script, setup-target.sh is provided to perform the installation.  Its us
 
      1. Run: ```sudo netplan apply```
 
+     1. Add the VM's IP address to the ```/etc/hosts``` file on the host computer *(optional)*:
+     ```
+     # Virtual Machines
+     192.168.56.10	nuc-vm
+
+        ```
+
   1. Now you can run the setup-target.sh to install the required packages.
 
 
