@@ -1,6 +1,6 @@
 # ubuntu-setup #
 
-**ubuntu-setup** is a collection of Ansible playbooks that can be use to configure a new installation of Ubuntu Server.  Each playbook uses a set of Ansible roles to drive the configurations.  Some roles are also appropriate for Ubuntu Desktop.
+**ubuntu-setup** is a collection of Ansible playbooks that can be use to configure a new installation of Ubuntu Server.  Each playbook uses a set of Ansible roles to drive the configurations.  Some roles are also appropriate for Ubuntu Desktop.  The [Roles](#roles) are listed at the end of the document.
 
 ## Setup Script ##
 A setup script, setup-target.sh is provided to perform the installation.  Its usage is:
@@ -53,8 +53,11 @@ A setup script, setup-target.sh is provided to perform the installation.  Its us
 
      1. Select the new VM and click on the *Settings* button;
 
-     1. Click on the *Storage* section in the pane on the left side. Click on the optical disk icon (circled in red in the image below) and select the ubuntu server ISO image downloaded above.
-     ![alt text](./images/vbox-storage-settings.png "Virtual Box Storage Settings")
+     1. Load the Ubuntu Server ISO image into the optical drive:
+        1. Click on the *Storage* section in the pane on the left side;
+        1. click on the optical disk drive under *Controller: IDE* in the storage devices;
+        1. Click on the optical disk icon on the dropdown menu (circled in red in the image below) and select the Ubuntu Server ISO image downloaded above.
+           ![alt text](./images/vbox-storage-settings.png "Virtual Box Storage Settings")
 
      1. Click on the *Network* section.
 
@@ -70,7 +73,7 @@ A setup script, setup-target.sh is provided to perform the installation.  Its us
 
         1. You will want the installer to format the entire (virtual) disk and use LVM (that's the default)
 
-        1. *Make sure that you select the OpenSSH server when prompted to select the software for your server:*  
+        1. *Make sure that you select the OpenSSH server when prompted to select the software for your server:*
         ![alt text](images/ubuntu-software-selection.png "Ubuntu Server Software Selection")
 
 
@@ -78,10 +81,10 @@ A setup script, setup-target.sh is provided to perform the installation.  Its us
 
      1. Run ```ip address``` to list the available interfaces.  There will be one ethernet interface that is up and has an IP address, e.g. enp0s3.  There will be a second ethernet interface that is down, e.g. enp0s8.  Note the name of this interface.
 
-     1. Edit /etc/netplan/01-netcfg.yaml  
+     1. Edit /etc/netplan/01-netcfg.yaml
         ```sudo nano /etc/netplan/01-netcfg.yaml```
 
-     1. Edit the file so that it contains:  
+     1. Edit the file so that it contains:
         ```
         # This file describes the network interfaces available on your system
         # For more information, see netplan(5).
@@ -102,7 +105,7 @@ A setup script, setup-target.sh is provided to perform the installation.  Its us
 
      1. Run: ```sudo netplan apply```
 
-     1. Add the VM's IP address to the ```/etc/hosts``` file on the host computer *(optional)*:  
+     1. Add the VM's IP address to the ```/etc/hosts``` file on the host computer *(optional)*:
      ```
      # Virtual Machines
      192.168.56.10	nuc-vm
